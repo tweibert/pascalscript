@@ -1,3 +1,7 @@
 *.dproj.local
-psconv.exe
-psconv.res
+*.exe
+*.res
+*.identcache
+*.dsk
+*.~dsk
+
