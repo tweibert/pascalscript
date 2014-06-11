@@ -12,7 +12,7 @@ unit ParserU;
 {version: 20041219}
 
 interface
-  uses uPSUtils, SysUtils, StrUtils, ParserUtils, BigIni, Classes;
+  uses uPSUtils, SysUtils, StrUtils, ParserUtils, IniFiles, Classes;
 
 type
   TProcAttr = set of (PublicProc, IsDone, IsHelper);
@@ -59,7 +59,7 @@ type
     fParser: TPsPascalParser;
     fToken, fPrevToken: TPasToken;
 //    fprevOrgToken: string;
-    Ini: TBigIniFile;
+    Ini: TIniFile;
     FRenamingHelper: Integer;
   private
     LastTokens: array of TPasToken;
@@ -206,11 +206,13 @@ begin
   FCompileTimeFunctions := false;
   Writeln := nil;
   Readln := nil;
-  Ini := TBigIniFile.Create(IniFilename);
+  Ini := TIniFile.Create(IniFilename);
+  {
   Ini.FlagDropApostrophes := True;
   ini.FlagDropCommentLines := True;
   Ini.FlagTrimRight := True;
   Ini.FlagFilterOutInvalid := True;
+  }
 
   fParser := TPSPascalParser.create;
   TokenHistoryLength := aTokenHistoryLength;
