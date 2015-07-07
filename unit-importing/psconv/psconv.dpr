@@ -8,7 +8,19 @@ uses
   System.SysUtils,
   System.Classes,
   System.RegularExpressions,
+  IdHashMessageDigest,
   ParserU;
+
+function md5(iString: string): string;
+var
+  idmd5: TIdHashMessageDigest5;
+begin
+  with TIdHashMessageDigest5.Create do try
+    Result := HashStringAsHex(iString)
+  finally
+    Free;
+  end;
+end;
 
 var
   sl: TStringList;
@@ -28,6 +40,13 @@ begin
 
       // Load source file
       sl.LoadFromFile(ParamStr(1));
+
+      // Replace methods that are marked with "// ScriptFilterMethod".
+      // We use a name derived from the MD5 hash of the entire line to
+      // ensure that the method name is consistent in the output file.
+      for i := 0 to sl.Count - 1 do
+        if sl[i].Contains('// ScriptFilterMethod') then
+          sl[i] := 'procedure FilteredMethod_' + md5(sl[i]) + ';';
 
       // Remove lines that have "NoScripting" in them
       i := 0;
