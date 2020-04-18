@@ -26,6 +26,7 @@ var
   sl: TStringList;
   i: integer;
   outputFilename: string;
+  killLine: boolean;
 
 begin
   try
@@ -50,8 +51,16 @@ begin
 
       // Remove lines that have "NoScripting" in them
       i := 0;
+      killLine := false;
       while i < sl.Count do
-        if pos('NoScripting', sl[i]) > 0 then
+        if sl[i].Contains('NoScripting') then begin
+          if sl[i].Contains('NoScriptingBegin') then
+            killLine := true;
+          if sl[i].Contains('NoScriptingEnd') then
+            killLine := false;
+          sl.Delete(i);
+        end
+        else if killLine then
           sl.Delete(i)
         else
           inc(i);
