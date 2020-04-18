@@ -2460,8 +2460,6 @@ begin
         else
         //-- end jgv
           Parsetype(TokenID, TypeName, TypeDescriptor, CheckSemiColon);
-
-        if b then TypeDescriptor := '';
       end;
     CSTII_Interface: // interfaces (  objectname = Interface ... end)
       begin
