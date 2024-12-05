@@ -30,8 +30,7 @@ begin
     btInterface:                       aValues := aValues + [TValue.From(IDispatch(aValue^.dta^))];
     btArray:
       begin
-         if Copy(aValue^.aType.ExportName, 1, 10) = '!OPENARRAY' then begin
-           l_len := PSDynArrayGetLength(Pointer(aValue^.Dta^), aValue^.aType) - 1;
+         if (Copy(aValue.aType.ExportName, 1, 10) = '!OPENARRAY') or (UpperCase(aValue.aType.ExportName) = 'TBYTES') or (Copy(aValue.aType.ExportName, 1, 10) = 'TOPENARRAY') then begin
            SetLength(arr, 0);
            for i := 0 to l_len do begin
              if not PSVariantIFCToTValue(PPSVariantIFC(IPointer(aValue^.Dta^) + IPointer(i) * 3 * SizeOf(Pointer)), arr) then begin
