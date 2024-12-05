@@ -27,6 +27,7 @@ begin
     btRecord:                          aValues := aValues + [TValue.From<Pointer>(aValue^.dta)];
     btStaticArray:                     aValues := aValues + [TValue.From<Pointer>(aValue^.dta)];
     btVariant:                         aValues := aValues + [TValue.From(Variant(aValue^.dta^))];
+    btInterface:                       aValues := aValues + [TValue.From(IDispatch(aValue^.dta^))];
     btArray:
       begin
          if Copy(aValue^.aType.ExportName, 1, 10) = '!OPENARRAY' then begin
