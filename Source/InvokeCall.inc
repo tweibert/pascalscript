@@ -154,6 +154,7 @@ begin
       btPChar:                 ppchar(res.dta)^ := pchar(Invoke(Address,Args,SysCalConv,TypeInfo(PChar),IsStatic).AsType<PChar>());
       btChar:                  pchar(res.dta)^ := Char(Invoke(Address,Args,SysCalConv,TypeInfo(Char),IsStatic).AsType<Char>());
       {$ENDIF}
+      btInterface:             IDispatch(res.dta^) := Invoke(Address,Args,SysCalConv,TypeInfo(IDispatch),False,IsConstr).AsType<IDispatch>();
       btSet:
         begin
           case TPSTypeRec_Set(res.aType).aByteSize  of
